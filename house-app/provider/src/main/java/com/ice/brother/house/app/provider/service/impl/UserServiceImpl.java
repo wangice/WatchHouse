@@ -6,6 +6,8 @@ import com.ice.brother.house.app.provider.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author:ice
  * @Date: 2018/6/16 14:21
@@ -13,13 +15,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-  @Autowired
-  private UserExtMapper userExtMapper;
+    @Autowired
+    private UserExtMapper userExtMapper;
 
-  @Override
-  public User userLogin(String email) {
+    @Override
+    public User userLogin(String email) {
 
-    User user = userExtMapper.selectUserByEmail(email);
-    return user;
-  }
+        User user = userExtMapper.selectUserByEmail(email);
+        return user;
+    }
+
+    @Override
+    public int updateLastLoginTime(String userId, Date date) {
+        return userExtMapper.updateLastLoginTime(userId, date);
+    }
 }

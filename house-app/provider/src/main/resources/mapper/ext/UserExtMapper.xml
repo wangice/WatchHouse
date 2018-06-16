@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ice.brother.house.app.provider.mapper.ext.UserExtMapper">
-  <resultMap id="BaseResultMap" type="com.ice.brother.house.app.provider.entities.User">
-    <id column="id" property="id" jdbcType="INTEGER"/>
-    <result column="user_id" property="userId" jdbcType="VARCHAR"/>
-    <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-    <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
-    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR"/>
-    <result column="email" property="email" jdbcType="VARCHAR"/>
-    <result column="regist_time" property="registTime" jdbcType="TIMESTAMP"/>
-    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
-    <result column="status" property="status" jdbcType="BIT"/>
-    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.ice.brother.house.app.provider.entities.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+        <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="regist_time" property="registTime" jdbcType="TIMESTAMP"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, user_id, user_name, pwd, phone_number, email, regist_time, last_update_time, 
     status, last_login_time
   </sql>
+    <!--通过email查询用户-->
+    <select id="selectUserByEmail" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where email = #{email}
+    </select>
 
-  <select id="selectUserByEmail" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from tb_user
-    where email = #{email}
-  </select>
+    <!--更新登录最后时间-->
+    <update id="updateLastLoginTime">
+    update tb_user set last_login_time = #{lastLoginTime}
+    where user_id = #{userId}
+  </update>
 </mapper>
