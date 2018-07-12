@@ -1,0 +1,2 @@
+protoc --proto_path=D:\work\WatchHouse\component\common\src\main\resources\proto --java_out=D:\work\WatchHouse\component\common\src\main\java\com\ice\brother\house\common D:\work\WatchHouse\component\common\src\main\resources\proto\WebOperateLog.proto
+pause

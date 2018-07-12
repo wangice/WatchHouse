@@ -9,6 +9,8 @@ public class Rsp {
     public enum RspErr {
         ERR_NONE(0x00000, "成功"),
 
+        ERR_SERVER_ERROR(0x00001, "服务器异常"),
+
         ERR_MISSING_PARAMS(0x00100, "缺少必要的参数"),
 
         ERR_NOT_FOUND_USER(0x00110, "没有找到用户"),

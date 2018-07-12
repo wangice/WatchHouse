@@ -1,0 +1,20 @@
+syntax = "proto3";  //指定版本，必须要写（proto3、proto2）
+
+option java_package = "com.ice.brother.house.common.ptoto";
+option java_outer_classname = "OperateLog";
+
+//message是固定的
+message WebOperateLog{
+
+   string id =1 ;
+   string user = 2;//用户名.
+   string ip = 3;//客户端ip地址.
+   string realIp = 4;//客户端真实Ip地址.
+   string module = 5;//模块.
+   string requestUrl = 6;//请求路径.
+   map<string, string> params = 7;//请求参数.
+   string requestMethod = 8;//请求方式.
+   string response = 9;//响应.
+   uint64 duration = 10;//耗时.
+   uint64 time = 11;//日志生成时间.
+}

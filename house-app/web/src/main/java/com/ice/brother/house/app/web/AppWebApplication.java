@@ -13,8 +13,8 @@ import org.springframework.context.annotation.PropertySource;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-@PropertySource(value ={"provider-${spring.profiles.active}.properties"})
-@ImportResource(value = {"classpath:provider.xml"})
+@PropertySource(value = {"provider-${spring.profiles.active}.properties"})
+@ImportResource(value = {"classpath:provider.xml", "classpath:mqproducer-config.xml"})
 public class AppWebApplication {
 
   public static final AtomicBoolean RUN = new AtomicBoolean(true);

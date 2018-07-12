@@ -15,12 +15,15 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-actuator</artifactId>
-      <version>${spring.boot.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>${spring.boot.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
     </dependency>
 
     <dependency> <!-- 引入log4j2依赖 -->
@@ -39,8 +42,12 @@
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <artifactId>slf4j-api</artifactId>
           <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -48,11 +55,49 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hdrhistogram</groupId>
+          <artifactId>HdrHistogram</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
       <groupId>com.ice.brother</groupId>
       <artifactId>provider</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.ice.brother</groupId>
+      <artifactId>es-client</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>elasticsearch</artifactId>
+          <groupId>org.elasticsearch</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.ice.brother</groupId>
+      <artifactId>common-misc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.ice.brother</groupId>
+      <artifactId>mqproducer</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ice.brother</groupId>
+      <artifactId>common</artifactId>
       <version>${project.version}</version>
     </dependency>
 
