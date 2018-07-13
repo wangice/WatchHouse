@@ -15,7 +15,6 @@ import org.apache.kafka.common.utils.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Component;
  * @Date: 2018/7/11 18:20
  */
 @Component
-@PropertySource(value = "classpath:kafka_${spring.profiles.active}.properties")
 public class KafkaMqConfiguration {
 
   private static final Logger logger = LoggerFactory.getLogger(KafkaMqConfiguration.class);
@@ -90,7 +88,7 @@ public class KafkaMqConfiguration {
             }
             byte by[] = record.value().get();
             Message msg = ((AbstractMessage.Builder<?>) mth
-                .invoke(Class.forName(record.key()).newInstance()))
+                .invoke(null))
                 .mergeFrom(by, 8, by.length - 8).build();
             Misc.exeBiConsumer(c, Net.byte2long(by, 0), msg);
           } catch (Exception e) {

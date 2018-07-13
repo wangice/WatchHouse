@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
  * @Date: 2018/7/9 19:37
  */
 @Configuration
-@PropertySource(value = "elasticsearch_${spring.profiles.active}.properties")
+@PropertySource(value = {"elasticsearch-${spring.profiles.active}.properties"})
 public class ESProperties {
 
   @Value("${elasticsearch.host}")

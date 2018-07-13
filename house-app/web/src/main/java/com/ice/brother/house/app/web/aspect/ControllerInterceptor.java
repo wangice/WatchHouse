@@ -68,7 +68,8 @@ public class ControllerInterceptor {
     WebOperateLog.Builder webOperateLog = WebOperateLog.newBuilder();
     webOperateLog.setModule("house-app-web");
     webOperateLog.setIp(request.getRemoteAddr());
-    webOperateLog.setRealIp(request.getHeader("X-Real-IP"));
+    webOperateLog.setRealIp(request.getHeader("X-Real-IP") == null ? request.getRemoteAddr()
+        : request.getHeader("X-Real-IP"));
     webOperateLog.setRequestMethod(
         request.getMethod() == null ? request.getRequestURI() : request.getMethod());
     //获取参数
@@ -88,7 +89,7 @@ public class ControllerInterceptor {
       logger.info("request end,elap: {}ms,uri: {},method: {},rsp: {}", (endTime - startTime), uri,
           method, Misc.obj2json(result));
       webOperateLog.setDuration(endTime - startTime);
-      webOperateLog.setResponse(Misc.obj2json(request));
+      webOperateLog.setResponse(Misc.obj2json(result));
       messageHandler.send(topic, webOperateLog.build(), new Date().getTime());
     } catch (Throwable throwable) {
       endTime = System.currentTimeMillis();
@@ -100,7 +101,7 @@ public class ControllerInterceptor {
           .debug("request end,elap: {}ms,uri: {},method: {},rsp: {},e: {}", (endTime - startTime),
               uri, method, Misc.obj2json(data), Misc.trace(throwable));
       webOperateLog.setDuration(endTime - startTime);
-      webOperateLog.setResponse(Misc.obj2json(request));
+      webOperateLog.setResponse(Misc.obj2json(data));
       messageHandler.send(topic, webOperateLog.build(), new Date().getTime());
       return data;
     }

@@ -33,7 +33,7 @@ public class KafkaConfiguration {
   private int bufferMemory;
   @Value("${key.serializer}")
   private String keySerializer;
-  @Value("${valueSerializer}")
+  @Value("${value.serializer}")
   private String valueSerializer;
 
   private KafkaProducer<String, Bytes> proc;
