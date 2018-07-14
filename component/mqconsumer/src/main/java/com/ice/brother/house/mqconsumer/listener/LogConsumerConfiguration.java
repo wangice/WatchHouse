@@ -44,10 +44,10 @@ public class LogConsumerConfiguration implements ConsumerListener {
     kafkaMqConfiguration.kafkaConsumer(logGroup, logTopic);
     new Thread(() -> kafkaMqConfiguration.start((ts, msg) -> {
       WebOperateLog webOperateLog = (WebOperateLog) msg;
-      logger.info("web operate log : {}", webOperateLog.toString());
+      logger.info("web operate log : {}", Misc.json2Map(Misc.pb2str(webOperateLog)));
       try {
         logger.info("es push");
-        esClient.postRquestAsync("weboperatelog", webOperateLog.toString());
+        esClient.postRquestAsync("weboperatelog", Misc.json2Map(Misc.pb2str(webOperateLog)));
       } catch (IOException e) {
         logger.info("es post push error:{}", Misc.trace(e));
       }

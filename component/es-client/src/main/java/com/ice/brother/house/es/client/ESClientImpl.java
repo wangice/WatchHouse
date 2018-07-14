@@ -30,8 +30,8 @@ public class ESClientImpl implements ESClient {
   public <T> void postRquestAsync(String index, T data) throws IOException {
     String indexWithPostfix = setIndexPostfix(index);
     // 将保存数据以Map格式关联到请求
-    Map<String, Object> source = beanToMap(data);
     IndexRequest request = new IndexRequest(indexWithPostfix, index);
+    Map<String, Object> source = beanToMap(data);
     request.source(source);
     ESClientFactory.getInstance(esProperties).requestES(request);
   }

@@ -29,7 +29,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
@@ -1013,6 +1015,18 @@ public class Misc {
   }
 
   /**
+   * json字符串转化Map
+   */
+  public static final Map<String, Object> json2Map(String json) {
+    try {
+      return Misc.gson.fromJson(json, HashMap.class);
+    } catch (Exception e) {
+      logger.debug("{}", Misc.trace(e));
+      return null;
+    }
+  }
+
+  /**
    * 设置系统环境变量.
    */
   public static final void setEnv(String key, Object val) {
@@ -1184,7 +1198,6 @@ public class Misc {
       return false;
     }
   }
-
 
   /**
    * do nothing.

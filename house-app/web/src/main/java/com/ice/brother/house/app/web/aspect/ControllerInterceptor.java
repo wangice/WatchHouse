@@ -66,6 +66,7 @@ public class ControllerInterceptor {
     long endTime;
     //
     WebOperateLog.Builder webOperateLog = WebOperateLog.newBuilder();
+    webOperateLog.setRequestUrl(uri);
     webOperateLog.setModule("house-app-web");
     webOperateLog.setIp(request.getRemoteAddr());
     webOperateLog.setRealIp(request.getHeader("X-Real-IP") == null ? request.getRemoteAddr()
