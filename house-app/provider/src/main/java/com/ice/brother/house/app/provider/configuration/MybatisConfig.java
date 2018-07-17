@@ -40,7 +40,7 @@ public class MybatisConfig {
 
 
   @Bean("dataSource")
-  public DataSource dmDataSource() {
+  public DataSource dataSource() {
     DruidDataSource ds = new DruidDataSource();
     logger.debug("DruidDataSource开始连接数据源...");
     ds.setDriverClassName(this.dataSourceProperties.getDriverClass());
@@ -68,10 +68,10 @@ public class MybatisConfig {
 
 
   @Bean(name = "sqlSessionFactory")
-  public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dmDataSource)
+  public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource)
       throws Exception {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-    sqlSessionFactoryBean.setDataSource(dmDataSource);
+    sqlSessionFactoryBean.setDataSource(dataSource);
     sqlSessionFactoryBean.setTypeAliasesPackage("com.ice.brother.house.app.provider.entities");
     ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     try {

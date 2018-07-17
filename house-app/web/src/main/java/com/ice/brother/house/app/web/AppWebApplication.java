@@ -3,6 +3,7 @@ package com.ice.brother.house.app.web;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
  * @author:ice
  * @Date: 2018/6/16 11:08
  */
+@ServletComponentScan
 @EnableDiscoveryClient
 @SpringBootApplication
 @PropertySource(value = {"provider-${spring.profiles.active}.properties"})

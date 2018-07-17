@@ -1,0 +1,2 @@
+insert into tb_user(id,user_id,user_name,pwd,phone_number,email,regist_time,last_update_time,status,last_login_time)
+values (1,'123','hi','123456','13462384792','1163569270@qq.com','2018-06-30 11:10:06','2018-06-16 18:01:42',0,'2018-06-16 22:30:03');
