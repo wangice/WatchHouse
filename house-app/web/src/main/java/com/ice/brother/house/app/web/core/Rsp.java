@@ -19,7 +19,7 @@ public class Rsp {
 
 
         ERR_END(0xFFFFF, "结束");
-
+        
         private int errCode;
 
         private String errName;
