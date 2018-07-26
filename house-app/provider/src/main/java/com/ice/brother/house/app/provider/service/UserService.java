@@ -16,6 +16,11 @@ public interface UserService {
     User userLogin(String email);
 
     /**
+     * 通过电话号码查询用户
+     */
+    User selectUserByPhoneNumber(String phoneNumber);
+
+    /**
      * 更新最后登录时间
      */
     int updateLastLoginTime(String userId, Date date);

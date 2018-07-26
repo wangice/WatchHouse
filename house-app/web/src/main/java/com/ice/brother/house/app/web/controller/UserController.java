@@ -6,8 +6,7 @@ import com.ice.brother.house.app.web.core.Rsp;
 import com.ice.brother.house.app.web.core.Rsp.RspErr;
 import com.ice.brother.house.app.web.rsp.RspLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -43,6 +42,18 @@ public class UserController extends BaseController {
             return transEnd(RspErr.ERR_PWD_ERROR);
         }
         userService.updateLastLoginTime(user.getUserId(), new Date());//更新最后登录时间
+        RspLogin rspLogin = new RspLogin();
+        rspLogin.setUserId(user.getUserId());
+        rspLogin.setUserName(user.getUserName());
+        return transEnd(RspErr.ERR_NONE, rspLogin);
+    }
+
+    @GetMapping("/user/queryPhonenumber")
+    public Rsp queryUserByPhoneNumber(@RequestParam("phoneNumber") String phoneNumber) throws Exception {
+        User user = userService.selectUserByPhoneNumber(phoneNumber);
+        if (user == null) {
+            return transEnd(RspErr.ERR_NOT_FOUND_USER);
+        }
         RspLogin rspLogin = new RspLogin();
         rspLogin.setUserId(user.getUserId());
         rspLogin.setUserName(user.getUserName());

@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selectUserByPhoneNumber(String phoneNumber) {
+        return userExtMapper.selectUserByPhoneNumber(phoneNumber);
+    }
+
+    @Override
     public int updateLastLoginTime(String userId, Date date) {
         return userExtMapper.updateLastLoginTime(userId, date);
     }

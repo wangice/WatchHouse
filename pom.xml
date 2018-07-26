@@ -11,6 +11,7 @@
     <module>house-server</module>
     <module>house-app</module>
     <module>component</module>
+    <module>house-advert</module>
   </modules>
   <packaging>pom</packaging>
   <name>WatchHouse</name>
@@ -34,6 +35,7 @@
     <project.version>1.0.0-SNAPSHOT</project.version>
 
     <eureka.version>1.4.4.RELEASE</eureka.version>
+    <feign.version>2.0.0.RELEASE</feign.version>
     <mysql.version>5.1.40</mysql.version>
     <mongo.version>3.3.0</mongo.version>
     <commons.lang.version>2.6</commons.lang.version>
