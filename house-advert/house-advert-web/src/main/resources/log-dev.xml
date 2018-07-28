@@ -1,72 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-  <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-  <property name="LOG_HOME" value="E:/ice/log"/>
+<Configuration status="warn">
+    <properties>
+        <!-- 日志路径 -->
+        <property name="LOG_HOME">/opt/logs</property>
+    </properties>
 
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT" ignoreExceptions="false">
+            <PatternLayout
+                    pattern="%d{HH:mm:ss.SSS} [%t] %M %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFileInfo" fileName="${LOG_HOME}/house-server-info.log"
+                     filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-info-%d{MM-dd-yyyy}-%i.log"
+                     ignoreExceptions="false">
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+            </Policies>
 
-  <!-- Console 输出设置 -->
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-      <charset>utf8</charset>
-    </encoder>
-  </appender>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="*/house-server-info-*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="RollingFileWarn" fileName="${LOG_HOME}/house-server-warn.log"
+                     filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-warn-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+            </Policies>
 
-  <!-- 按照每天生成日志文件 -->
-  <appender name="DAYINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!--日志文件输出的文件名-->
-      <FileNamePattern>${LOG_HOME}/TestSpringBoot_info.log.%d{yyyy-MM-dd}.log</FileNamePattern>
-      <!--日志文件保留天数-->
-      <MaxHistory>7</MaxHistory>
-    </rollingPolicy>
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>info</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>WARN</level>
-      <onMatch>DENY</onMatch>
-      <onMismatch>NEUTRAL</onMismatch>
-    </filter>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
-    </encoder>
-    <!--日志文件最大的大小-->
-    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-      <MaxFileSize>10MB</MaxFileSize>
-    </triggeringPolicy>
-  </appender>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="*/house-server-warn-*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="RollingFileDebug" fileName="${LOG_HOME}/house-server-debug.log"
+          filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-debug-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+            </Policies>
 
-  <appender name="DAYERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!--日志文件输出的文件名-->
-      <FileNamePattern>${LOG_HOME}/TestSpringBoot_error.log.%d{yyyy-MM-dd}.log</FileNamePattern>
-      <!--日志文件保留天数-->
-      <MaxHistory>30</MaxHistory>
-    </rollingPolicy>
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>error</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
-    </encoder>
-    <!--日志文件最大的大小-->
-    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-      <MaxFileSize>10MB</MaxFileSize>
-    </triggeringPolicy>
-  </appender>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="*/house-server-debug-*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="RollingFileError" fileName="${LOG_HOME}/house-server-error.log"
+                     filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-error-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+            </Policies>
 
-  <!-- 日志输出级别 -->
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="*/house-server-error-*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
 
-  <root level="INFO">
-    <appender-ref ref="STDOUT"/>
-    <appender-ref ref="DAYERROR"/>
-    <appender-ref ref="DAYINFO"/>
-  </root>
-</configuration>
+    </appenders>
+
+    <Loggers>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.apache.curator" level="INFO"/>
+        <logger name="io.netty" level="INFO"/>
+        <logger name="com.alibaba.dubbo" level="WARN"/>
+        <logger name="com.alibaba.boot" level="WARN"/>
+        <root level="all">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+            <appender-ref ref="RollingFileDebug"/>
+        </root>
+    </Loggers>
+</Configuration>

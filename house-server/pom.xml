@@ -41,8 +41,14 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-logging</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-core</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
+
+
 
     <dependency>
       <groupId>org.springframework.cloud</groupId>
@@ -53,7 +59,17 @@
           <groupId>org.hdrhistogram</groupId>
           <artifactId>HdrHistogram</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId> com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId> com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
     </dependency>
   </dependencies>
 
