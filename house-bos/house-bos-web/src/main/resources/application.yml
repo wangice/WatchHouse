@@ -1,0 +1,16 @@
+server:
+  port: 8120
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+spring:
+  application:
+    name: house-bos-web
+
+  profiles:
+    active: dev
+
+auth:
+  anonUrl: /login,/auth,/auth_menus,/easyui,/logOut,/error,/500,/401,/405,/404,/403
+  adminUrl: /**,/project**,/menu**,/function**,/users,/roles

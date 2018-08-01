@@ -9,13 +9,12 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>house-app</artifactId>
+  <artifactId>house-bos</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>provider</module>
-    <module>web</module>
+    <module>house-bos-web</module>
+    <module>house-bos-provider</module>
   </modules>
-
 
   <dependencyManagement>
     <dependencies>
@@ -25,6 +24,7 @@
         <artifactId>spring-boot-actuator</artifactId>
         <version>${spring.boot.version}</version>
       </dependency>
+
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-logging</artifactId>
@@ -47,6 +47,11 @@
         <version>${spring.boot.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -57,11 +62,6 @@
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>${mysql.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mongodb</groupId>
-        <artifactId>mongo-java-driver</artifactId>
-        <version>${mongo.version}</version>
       </dependency>
 
       <dependency>
@@ -78,6 +78,17 @@
         <groupId>org.mybatis.spring.boot</groupId>
         <artifactId>mybatis-spring-boot-starter</artifactId>
         <version>${mybatis.springboot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.shiro</groupId>
+        <artifactId>shiro-core</artifactId>
+        <version>${shiro.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.shiro</groupId>
+        <artifactId>shiro-spring</artifactId>
+        <version>${shiro.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
