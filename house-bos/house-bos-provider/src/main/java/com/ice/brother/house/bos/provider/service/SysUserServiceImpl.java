@@ -17,7 +17,14 @@ public class SysUserServiceImpl implements SysUserService {
 
   @Override
   public SysUser selectSysUserByName(SysUser sysUser) {
-    return sysUserMapper.selectSysUserByName(sysUser);
+    SysUser user = sysUserMapper.selectSysUserByName(sysUser);
+    if (user == null) {//账号不存在
+      return null;
+    }
+    if (!user.pwd.equals(sysUser.pwd)) {//密码错误
+      return null;
+    }
+    return user;
   }
 
   @Override

@@ -1,5 +1,6 @@
 package com.ice.brother.house.bos.web.shiro;
 
+import com.ice.brother.house.Misc;
 import com.ice.brother.house.bos.provider.entities.SysUser;
 import com.ice.brother.house.bos.provider.service.SysUserService;
 import java.util.ArrayList;
@@ -52,10 +53,12 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
     ShiroUsernamePasswordToken token = (ShiroUsernamePasswordToken) authenticationToken;
     SysUser params = new SysUser();
     params.userName = token.getUsername();
+    params.pwd = new String(token.getPassword());
     SysUser user = null;
     try {
       user = sysUserService.selectSysUserByName(params);
     } catch (Exception e) {
+      logger.info(Misc.trace(e));
       logger.warn("find user error");
       return null;
     }
@@ -91,7 +94,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
     SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
     simpleAuthorInfo.addRoles(roleList);
     simpleAuthorInfo.addStringPermissions(permissions);
-    return null;
+    return simpleAuthorInfo;
   }
 
 

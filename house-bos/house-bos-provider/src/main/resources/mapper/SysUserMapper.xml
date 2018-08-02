@@ -5,7 +5,7 @@
   <resultMap id="BaseResultMap" type="com.ice.brother.house.bos.provider.entities.SysUser">
     <id column="user_id" property="userId" jdbcType="INTEGER"/>
     <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-    <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+    <result column="user_pwd" property="pwd" jdbcType="VARCHAR"/>
     <result column="creator" property="creator" jdbcType="VARCHAR"/>
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     <result column="updator" property="updator" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
 
 
   <sql id="Base_Column_List">
-    user_id, user_name, pwd, creator, create_time, updator, update_time
+    user_id, user_name, user_pwd, creator, create_time, updator, update_time
   </sql>
 
   <!--通过用户名查询用户-->
@@ -37,11 +37,11 @@
 
   <!--获取用户角色-->
   <select id="selectUserRole" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select user_id,user_name,ri.role_id,ri.role_name,ri.remark
+    select us.user_id,us.user_name,ri.role_id,ri.role_name,ri.remark
     from tb_sys_user us
     left join tb_sys_user_role ur on us.user_id = ur.user_id
     left join tb_role_info ri on ri.role_id = ur.role_id
-    where user_id = #{userId}
+    where us.user_id = #{userId}
   </select>
 
 </mapper>
