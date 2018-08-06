@@ -1,5 +1,6 @@
-package com.ice.brother.house.task;
+package com.ice.brother.house.task.actor;
 
+import com.ice.brother.house.Misc;
 import java.util.function.Consumer;
 
 /**
@@ -9,7 +10,7 @@ import java.util.function.Consumer;
 public abstract class Actor {
 
   public enum ActorType {
-    TIC,  /* 立刻消费. */
+    ITC,  /* 立刻消费. */
 
     BLOCKING;  /* 阻塞.*/
   }
@@ -28,12 +29,17 @@ public abstract class Actor {
     this.name = this.getClass().getSimpleName();
   }
 
+  /**
+   * 任务消费
+   */
   public void future(Consumer<Void> c) {
     if (this.type.ordinal() == ActorType.BLOCKING.ordinal()) {//阻塞
-
+      ((ActorBlocking) this).push(c);
+      return;
     } else {
-      
+      Misc.exeConsumer(c, null);
     }
   }
+
 
 }

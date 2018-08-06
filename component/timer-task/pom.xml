@@ -11,5 +11,12 @@
 
   <artifactId>timer-task</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.ice.brother</groupId>
+      <artifactId>common-misc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>
