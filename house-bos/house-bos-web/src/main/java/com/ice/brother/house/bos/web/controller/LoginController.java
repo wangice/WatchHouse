@@ -1,5 +1,7 @@
 package com.ice.brother.house.bos.web.controller;
 
+import com.ice.brother.house.Misc;
+import com.ice.brother.house.bos.provider.entities.SysUser;
 import com.ice.brother.house.bos.web.rsp.Rsp;
 import com.ice.brother.house.bos.web.rsp.Rsp.RspErr;
 import com.ice.brother.house.bos.web.shiro.ShiroUsernamePasswordToken;
@@ -37,13 +39,24 @@ public class LoginController extends BaseController {
         "123456");
     try {
       subject.login(token);
+      if (!subject.isAuthenticated()) {
+        return transEnd(RspErr.ERR_LOGIN_AUTH_ERROR);
+      }
     } catch (AuthenticationException e) {
       return transEnd(RspErr.ERR_LOGIN_AUTH_ERROR);
     }
+    SysUser sysUser = (SysUser) subject.getPrincipal();
+    logger.info("sysUser: {}", Misc.obj2json(sysUser));
+    //放入缓存中
     return transEnd(RspErr.ERR_NONE);
   }
 
+  @GetMapping("/queryUser")
+  public Rsp create(HttpServletRequest request) throws Exception {
+    logger.info("进入");
 
+    return transEnd(RspErr.ERR_NONE);
+  }
 
 
 }

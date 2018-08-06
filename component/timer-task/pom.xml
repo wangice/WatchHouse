@@ -3,21 +3,13 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>watch-house</artifactId>
+    <artifactId>component</artifactId>
     <groupId>com.ice.brother</groupId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>component</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>es-client</module>
-    <module>common-misc</module>
-    <module>common</module>
-    <module>mqproducer</module>
-    <module>mqconsumer</module>
-    <module>timer-task</module>
-  </modules>
+  <artifactId>timer-task</artifactId>
+
 
 </project>
