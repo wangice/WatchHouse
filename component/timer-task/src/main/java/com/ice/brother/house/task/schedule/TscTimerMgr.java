@@ -1,27 +1,29 @@
 package com.ice.brother.house.task.schedule;
 
 import com.ice.brother.house.Misc;
+import com.ice.brother.house.ODateu;
 import com.ice.brother.house.task.actor.Actor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import misc.Dateu;
+import org.springframework.stereotype.Component;
 
 /**
  * @author:ice
  * @Date: 2018/8/4 16:04
  */
+@Component
 public class TscTimerMgr extends Actor {
 
   /**
    * 每个Tworker工作线程上都有一个定时器管理器.
    */
-  public static TscTimerMgr mgr[] = null;
+  public TscTimerMgr mgr = null;
   /**
    * 每个时间轮上的刻度数(一个刻度为1秒).
    */
-  private static final int TICKS = 0x400;
+  private int TICKS = 0x400;
   /**
    * 上次刻度跳动的时间戳.
    */
@@ -37,18 +39,13 @@ public class TscTimerMgr extends Actor {
    */
   public ArrayList<HashSet<TscTimer>> wheel = new ArrayList<HashSet<TscTimer>>();
 
-  public TscTimerMgr(int wk) {
+  public TscTimerMgr() {
     super(ActorType.ITC);
   }
 
-  public static final void init() {
-    TscTimerMgr.mgr = new TscTimerMgr[Tsc.wks.length];
-    for (int i = 0; i < Tsc.wks.length; ++i) {
-      TscTimerMgr.mgr[i] = new TscTimerMgr(i);
-      for (int c = 0; c < TscTimerMgr.TICKS; ++c) {
-        TscTimerMgr.mgr[i].wheel.add(new HashSet<TscTimer>()); /* 初始化每个线程上的时间轮. */
-      }
-    }
+  public void init() {
+    this.mgr = new TscTimerMgr();
+    this.mgr.wheel.add(new HashSet<TscTimer>()); /* 初始化线程上的时间轮. */
   }
 
   /** ---------------------------------------------------------------- */
@@ -59,34 +56,32 @@ public class TscTimerMgr extends Actor {
   /**
    * 跳动一个刻度.
    */
-  public static final void quartz(long now) {
-    int indx = Tsc.getCurrentWorkerIndex();
-    if (now - TscTimerMgr.mgr[indx].lts < Dateu.SECOND) /* 不足一秒. */ {
+  public void quartz(long now) {
+    if (now - this.mgr.lts < ODateu.SECOND) /* 不足一秒. */ {
       return;
     }
     //
-    TscTimerMgr.mgr[indx].lts = now;
-    TscTimerMgr.mgr[indx].loop(); /* 执行定时器检查. */
-    TscTimerMgr.mgr[indx].slot += 1; /* 指针跳动. */
-    TscTimerMgr.mgr[indx].slot =
-        TscTimerMgr.mgr[indx].slot == TscTimerMgr.TICKS ? 0 : TscTimerMgr.mgr[indx].slot;
+    this.mgr.lts = now;
+    this.mgr.loop(); /* 执行定时器检查. */
+    this.mgr.slot += 1; /* 指针跳动. */
+    this.mgr.slot =
+        this.mgr.slot == this.TICKS ? 0 : this.mgr.slot;
   }
 
   /**
    * 添加一个定时器(此函数只允许在工作线程上调用), 并返回定时器存根. 据此存根可在当前线程上取消定时器.
    */
-  public static final TscTimer addTimer(int sec /* sec秒后超时. */,
+  public TscTimer addTimer(int sec /* sec秒后超时. */,
       Function<Void, Boolean /* 返回true时表示定时器继续生效. */> cb /* 超时后回调. */) {
-    int indx = Tsc.getCurrentWorkerIndex();
-    return TscTimerMgr.mgr[indx].add(sec, cb);
+    return this.mgr.add(sec, cb);
   }
 
   /**
    * 添加一个定时器, 一次性使用.
    */
-  public static final TscTimer addTimerOneTime(int sec, /* sec秒后超时. */
+  public TscTimer addTimerOneTime(int sec, /* sec秒后超时. */
       Consumer<Void> cb /* 超时回调. */) {
-    return TscTimerMgr.addTimer(sec, tm ->
+    return this.addTimer(sec, tm ->
     {
       Misc.exeConsumer(cb, null);
       return false;
@@ -96,8 +91,8 @@ public class TscTimerMgr extends Actor {
   /**
    * 取消一个定时器.
    */
-  public static final void cancelTimer(TscTimer timer) {
-    Tsc.wks[timer.wk].future(v -> TscTimerMgr.mgr[timer.wk].cancel(timer));
+  public void cancelTimer(TscTimer timer) {
+    this.future(v -> this.mgr.cancel(timer));
   }
 
   /** ---------------------------------------------------------------- */
@@ -108,7 +103,7 @@ public class TscTimerMgr extends Actor {
   /**
    * 执行定时器检查.
    */
-  private final void loop() {
+  private void loop() {
     HashSet<TscTimer> solt = this.wheel.get(this.slot);
     ArrayList<TscTimer> arr = new ArrayList<>();
     solt.forEach(v -> arr.add(v)); /* 为避免并发修改, 这里先做一个镜像. */
@@ -127,10 +122,10 @@ public class TscTimerMgr extends Actor {
     }
     //
     for (TscTimer tt : tmp) {
-      int m = tt.sec % TscTimerMgr.TICKS;
+      int m = tt.sec % this.TICKS;
       int pos = this.slot + m;
-      tt.slot = pos < TscTimerMgr.TICKS ? pos /* 放置在指针前面(还未到) */
-          : (pos - TscTimerMgr.TICKS) /* 放置在指针后面(已经过). */;
+      tt.slot = pos < this.TICKS ? pos /* 放置在指针前面(还未到) */
+          : (pos - this.TICKS) /* 放置在指针后面(已经过). */;
       this.wheel.get(tt.slot).add(tt);
     }
   }
@@ -138,12 +133,12 @@ public class TscTimerMgr extends Actor {
   /**
    * 添加一个定时器.
    */
-  private final TscTimer add(int sec /* sec秒后超时. */, Function<Void, Boolean> cb /* 超时后回调. */) {
-    int m = sec % TscTimerMgr.TICKS;
+  private TscTimer add(int sec /* sec秒后超时. */, Function<Void, Boolean> cb /* 超时后回调. */) {
+    int m = sec % this.TICKS;
     int pos = this.slot + m;
-    TscTimer tt = new TscTimer(sec, (sec / TscTimerMgr.TICKS),
-        pos < TscTimerMgr.TICKS ? pos /* 放置在指针前面(还未到) */
-            : (pos - TscTimerMgr.TICKS) /* 放置在指针后面(已经过). */, cb);
+    TscTimer tt = new TscTimer(sec, (sec / this.TICKS),
+        pos < this.TICKS ? pos /* 放置在指针前面(还未到) */
+            : (pos - this.TICKS) /* 放置在指针后面(已经过). */, cb);
     HashSet<TscTimer> solt = this.wheel.get(tt.slot);
     solt.add(tt);
     return tt;
@@ -152,7 +147,7 @@ public class TscTimerMgr extends Actor {
   /**
    * 取消一个定时器.
    */
-  private final boolean cancel(TscTimer timer) {
+  private boolean cancel(TscTimer timer) {
     return this.wheel.get(timer.slot).remove(timer);
   }
 

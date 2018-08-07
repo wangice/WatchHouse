@@ -17,6 +17,22 @@
       <artifactId>common-misc</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId></artifactId>
+    </dependency>
+
+    <dependency> <!-- 引入log4j2依赖 -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+      <version>${spring.boot.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+      <version>${spring.boot.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
