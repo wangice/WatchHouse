@@ -31,4 +31,11 @@
     update tb_user set last_login_time = #{lastLoginTime}
     where user_id = #{userId}
   </update>
+
+  <select id="selectUserByPhoneNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_user
+    where phone_number = #{phoneNumber}
+  </select>
 </mapper>

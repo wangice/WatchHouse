@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @EnableDiscoveryClient
 @SpringBootApplication(exclude = {WebMvcAutoConfiguration.class, CommonsClientAutoConfiguration.class, HystrixAutoConfiguration.class})
 @PropertySource(value = {"provider-${spring.profiles.active}.properties"})
-@ImportResource(value = {"classpath:provider.xml", "classpath:mqproducer-config.xml"})
+@ImportResource(value = {"classpath:provider.xml", "classpath:mqproducer-config.xml","classpath:task-config.xml"})
 public class AppWebApplication {
 
   public static final AtomicBoolean RUN = new AtomicBoolean(true);

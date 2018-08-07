@@ -13,3 +13,8 @@ spring:
 
 log:
   topic: WEB_OPERATE_LOG
+
+tworker:
+  quartz: 1000
+thread:
+  size: 2

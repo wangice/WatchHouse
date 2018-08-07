@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TscTimerMgr extends Actor {
+
+  private static final Logger logger = LoggerFactory.getLogger(TscTimerMgr.class);
 
   /**
    * 每个Tworker工作线程上都有一个定时器管理器.
@@ -33,7 +37,6 @@ public class TscTimerMgr extends Actor {
    */
   private int slot = 0;
 
-
   /**
    * Tworker工作线程上的时间轮.
    */
@@ -45,7 +48,10 @@ public class TscTimerMgr extends Actor {
 
   public void init() {
     this.mgr = new TscTimerMgr();
-    this.mgr.wheel.add(new HashSet<TscTimer>()); /* 初始化线程上的时间轮. */
+    for (int c = 0; c < this.TICKS; ++c) {
+      this.mgr.wheel.add(new HashSet<TscTimer>()); /* 初始化线程上的时间轮. */
+    }
+    logger.info("TscTimer manager init successfully.");
   }
 
   /** ---------------------------------------------------------------- */
@@ -64,8 +70,7 @@ public class TscTimerMgr extends Actor {
     this.mgr.lts = now;
     this.mgr.loop(); /* 执行定时器检查. */
     this.mgr.slot += 1; /* 指针跳动. */
-    this.mgr.slot =
-        this.mgr.slot == this.TICKS ? 0 : this.mgr.slot;
+    this.mgr.slot = this.mgr.slot == this.TICKS ? 0 : this.mgr.slot;
   }
 
   /**

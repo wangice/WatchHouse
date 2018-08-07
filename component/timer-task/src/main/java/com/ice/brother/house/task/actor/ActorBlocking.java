@@ -32,11 +32,8 @@ public class ActorBlocking extends Actor {
    */
   public volatile boolean busy = false;
 
-
-  public ActorBlocking(int tc) {
+  public ActorBlocking() {
     super(ActorType.BLOCKING);
-    this.tc = tc < 1 ? 1 : tc;
-    this.start();
   }
 
   /**
@@ -64,10 +61,18 @@ public class ActorBlocking extends Actor {
     return this.size.get();
   }
 
+  public int getTc() {
+    return tc;
+  }
+
+  public void setTc(int tc) {
+    this.tc = tc < 1 ? 1 : tc;
+  }
+
   /**
    * 启动线程
    */
-  private void start() {
+  protected void start() {
     ActorBlocking ab = this;
     ExecutorService ex = Executors.newFixedThreadPool(this.tc);//创建线程池
     for (int i = 0; i < tc; i++) {
