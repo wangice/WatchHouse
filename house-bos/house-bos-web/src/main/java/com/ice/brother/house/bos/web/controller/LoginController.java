@@ -51,12 +51,5 @@ public class LoginController extends BaseController {
     return transEnd(RspErr.ERR_NONE);
   }
 
-  @GetMapping("/queryUser")
-  public Rsp create(HttpServletRequest request) throws Exception {
-    logger.info("进入");
-
-    return transEnd(RspErr.ERR_NONE);
-  }
-
 
 }
