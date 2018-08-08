@@ -1,108 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
-    <properties>
-        <!-- 日志路径 -->
-        <property name="LOG_HOME">/opt/logs</property>
-    </properties>
+  <properties>
+    <!-- 日志路径 -->
+    <property name="LOG_HOME">/opt/logs</property>
+  </properties>
 
-    <appenders>
-        <Console name="Console" target="SYSTEM_OUT" ignoreExceptions="false">
-            <PatternLayout
-                    pattern="%d{HH:mm:ss.SSS} [%t] %M %-5level %logger{36} - %msg%n"/>
-        </Console>
-        <RollingFile name="RollingFileInfo" fileName="${LOG_HOME}/house-server-info.log"
-                     filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-info-%d{MM-dd-yyyy}-%i.log"
-                     ignoreExceptions="false">
-            <Filters>
-                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
-                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-            </Policies>
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT" ignoreExceptions="false">
+      <PatternLayout
+        pattern="%d{HH:mm:ss.SSS} [%t] %M %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <RollingFile name="RollingFileInfo" fileName="${LOG_HOME}/house-bos-web-info.log"
+      filePattern="${LOG_HOME}/${date:yyyy-MM}/house-bos-web-info-%d{MM-dd-yyyy}-%i.log"
+      ignoreExceptions="false">
+      <Filters>
+        <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size="10 MB"/>
+        <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+      </Policies>
 
-            <DefaultRolloverStrategy>
-                <Delete basePath="${LOG_HOME}" maxDepth="2">
-                    <IfFileName glob="*/house-server-info-*.log" />
-                    <IfLastModified age="7d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile>
-        <RollingFile name="RollingFileWarn" fileName="${LOG_HOME}/house-server-warn.log"
-                     filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-warn-%d{yyyy-MM-dd}-%i.log">
-            <Filters>
-                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
-                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-            </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${LOG_HOME}" maxDepth="2">
+          <IfFileName glob="*/house-bos-web-info-*.log"/>
+          <IfLastModified age="7d"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+    <RollingFile name="RollingFileWarn" fileName="${LOG_HOME}/house-bos-web-warn.log"
+      filePattern="${LOG_HOME}/${date:yyyy-MM}/house-bos-web-warn-%d{yyyy-MM-dd}-%i.log">
+      <Filters>
+        <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+        <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size="10 MB"/>
+        <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+      </Policies>
 
-            <DefaultRolloverStrategy>
-                <Delete basePath="${LOG_HOME}" maxDepth="2">
-                    <IfFileName glob="*/house-server-warn-*.log" />
-                    <IfLastModified age="7d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile>
-        <RollingFile name="RollingFileDebug" fileName="${LOG_HOME}/house-server-debug.log"
-          filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-debug-%d{yyyy-MM-dd}-%i.log">
-            <Filters>
-                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
-                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-            </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${LOG_HOME}" maxDepth="2">
+          <IfFileName glob="*/house-bos-web-warn-*.log"/>
+          <IfLastModified age="7d"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+    <RollingFile name="RollingFileDebug" fileName="${LOG_HOME}/house-bos-web-debug.log"
+      filePattern="${LOG_HOME}/${date:yyyy-MM}/house-bos-web-debug-%d{yyyy-MM-dd}-%i.log">
+      <Filters>
+        <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+        <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size="10 MB"/>
+        <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+      </Policies>
 
-            <DefaultRolloverStrategy>
-                <Delete basePath="${LOG_HOME}" maxDepth="2">
-                    <IfFileName glob="*/house-server-debug-*.log" />
-                    <IfLastModified age="7d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile>
-        <RollingFile name="RollingFileError" fileName="${LOG_HOME}/house-server-error.log"
-                     filePattern="${LOG_HOME}/${date:yyyy-MM}/house-server-error-%d{yyyy-MM-dd}-%i.log">
-            <ThresholdFilter level="ERROR"/>
-            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="10 MB"/>
-                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
-            </Policies>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${LOG_HOME}" maxDepth="2">
+          <IfFileName glob="*/house-bos-web-debug-*.log"/>
+          <IfLastModified age="7d"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
+    <RollingFile name="RollingFileError" fileName="${LOG_HOME}/house-bos-web-error.log"
+      filePattern="${LOG_HOME}/${date:yyyy-MM}/house-bos-web-error-%d{yyyy-MM-dd}-%i.log">
+      <ThresholdFilter level="ERROR"/>
+      <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%t] [%p] - %l - %m%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy/>
+        <SizeBasedTriggeringPolicy size="10 MB"/>
+        <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+      </Policies>
 
-            <DefaultRolloverStrategy>
-                <Delete basePath="${LOG_HOME}" maxDepth="2">
-                    <IfFileName glob="*/house-server-error-*.log" />
-                    <IfLastModified age="7d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-        </RollingFile>
+      <DefaultRolloverStrategy>
+        <Delete basePath="${LOG_HOME}" maxDepth="2">
+          <IfFileName glob="*/house-bos-web-error-*.log"/>
+          <IfLastModified age="7d"/>
+        </Delete>
+      </DefaultRolloverStrategy>
+    </RollingFile>
 
-    </appenders>
+    <Kafka name="KAFKA" topic="log4j-kafka" syncSend="false">
+      <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"/>
+      <Property name="bootstrap.servers">127.0.0.1:9092</ Property>
+      <Property name="retries">10</ Property>
+      <Property name="linger.ms">5</ Property>
+      <Property name="buffer.memory">33554432</ Property>
+    </Kafka>
 
-    <Loggers>
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="org.apache.curator" level="INFO"/>
-        <logger name="io.netty" level="INFO"/>
-        <logger name="com.alibaba.dubbo" level="WARN"/>
-        <logger name="com.alibaba.boot" level="WARN"/>
-        <root level="all">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileWarn"/>
-            <appender-ref ref="RollingFileError"/>
-            <appender-ref ref="RollingFileDebug"/>
-        </root>
-    </Loggers>
+  </appenders>
+
+  <Loggers>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.apache.curator" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+    <logger name="com.ice.brother.house.bos.web" level="DEBUG" additivity ="false">
+      <AppenderRef ref ="CONSOLE"/>
+      <AppenderRef ref ="INTERPHONE"/>
+      <AppenderRef ref ="KAFKA"/>
+    </logger>
+    <Root level ="DEBUG" >
+      <AppenderRef ref ="CONSOLE"/>
+      <AppenderRef ref ="INTERPHONE"/>
+      <AppenderRef ref ="KAFKA"/>
+    </Root>
+
+    <root level="all">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="RollingFileInfo"/>
+      <appender-ref ref="RollingFileWarn"/>
+      <appender-ref ref="RollingFileError"/>
+      <appender-ref ref="RollingFileDebug"/>
+    </root>
+  </Loggers>
 </Configuration>

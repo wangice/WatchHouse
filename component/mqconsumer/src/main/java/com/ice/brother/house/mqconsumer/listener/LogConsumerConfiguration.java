@@ -3,6 +3,7 @@ package com.ice.brother.house.mqconsumer.listener;
 import com.ice.brother.house.Misc;
 import com.ice.brother.house.common.proto.OperateLog.WebOperateLog;
 import com.ice.brother.house.es.client.ESClient;
+import com.ice.brother.house.mqconsumer.configuration.KafkaMqConfiguration;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;

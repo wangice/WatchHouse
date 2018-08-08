@@ -18,6 +18,7 @@
     <module>mqproducer</module>
     <module>mqconsumer</module>
     <module>timer-task</module>
+    <module>log-mqconsumer</module>
   </modules>
 
 </project>

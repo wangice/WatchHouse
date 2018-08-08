@@ -6,6 +6,8 @@ import com.ice.brother.house.bos.web.configuration.LocaleMessageSourceService;
 import com.ice.brother.house.bos.web.rsp.Rsp;
 import com.ice.brother.house.bos.web.rsp.Rsp.RspErr;
 import com.ice.brother.house.bos.web.rsp.RspQueryProjectVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController extends BaseController {
 
+  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
   @Autowired
   private SysUserService sysUserService;
 
@@ -25,6 +29,7 @@ public class UserController extends BaseController {
 
   @GetMapping("/queryUserList")
   public Rsp queryUserList() throws Exception {
+    logger.debug("queryuserlist 请求");
     RspQueryProjectVersion rsp = new RspQueryProjectVersion();
     rsp.projectVersion = localeMessageSourceService.getMessage(I18nConstant.MESSAGE, null);
     return transEnd(RspErr.ERR_NONE, rsp);

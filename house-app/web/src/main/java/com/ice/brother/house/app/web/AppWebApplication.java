@@ -23,8 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @ImportResource(value = {"classpath:provider.xml", "classpath:mqproducer-config.xml","classpath:task-config.xml"})
 public class AppWebApplication {
 
-  public static final AtomicBoolean RUN = new AtomicBoolean(true);
-
   public static void main(String[] args) {
     SpringApplication.run(AppWebApplication.class, args);
   }

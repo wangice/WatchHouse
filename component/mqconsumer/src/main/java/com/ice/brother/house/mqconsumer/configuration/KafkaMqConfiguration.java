@@ -1,4 +1,4 @@
-package com.ice.brother.house.mqconsumer.listener;
+package com.ice.brother.house.mqconsumer.configuration;
 
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Message;
