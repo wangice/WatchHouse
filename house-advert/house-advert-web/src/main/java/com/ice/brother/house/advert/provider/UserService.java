@@ -1,7 +1,5 @@
 package com.ice.brother.house.advert.provider;
 
-import com.ice.brother.house.advert.provider.impl.UserServiceImpl;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 
 @Component
-@FeignClient(value = "house-app-web", fallback = UserServiceImpl.class)
+//@FeignClient(value = "house-app-web", fallback = UserServiceImpl.class)
 public interface UserService {
 
     @GetMapping("/user/queryPhonenumber")

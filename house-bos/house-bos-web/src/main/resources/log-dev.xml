@@ -89,13 +89,13 @@
       </DefaultRolloverStrategy>
     </RollingFile>
 
-    <Kafka name="KAFKA" topic="log4j-kafka" syncSend="false">
+    <Kafka name="KAFKA" topic="my-topic" syncSend="false">
       <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
       <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"/>
-      <Property name="bootstrap.servers">127.0.0.1:9092</ Property>
-      <Property name="retries">10</ Property>
-      <Property name="linger.ms">5</ Property>
-      <Property name="buffer.memory">33554432</ Property>
+      <Property name="bootstrap.servers">localhost:9092</Property>
+      <Property name="retries">10</Property>
+      <Property name="linger.ms">5</Property>
+      <Property name="buffer.memory">33554432</Property>
     </Kafka>
 
   </appenders>
@@ -105,15 +105,8 @@
     <logger name="org.apache.curator" level="INFO"/>
     <logger name="io.netty" level="INFO"/>
     <logger name="com.ice.brother.house.bos.web" level="DEBUG" additivity ="false">
-      <AppenderRef ref ="CONSOLE"/>
-      <AppenderRef ref ="INTERPHONE"/>
       <AppenderRef ref ="KAFKA"/>
     </logger>
-    <Root level ="DEBUG" >
-      <AppenderRef ref ="CONSOLE"/>
-      <AppenderRef ref ="INTERPHONE"/>
-      <AppenderRef ref ="KAFKA"/>
-    </Root>
 
     <root level="all">
       <appender-ref ref="Console"/>

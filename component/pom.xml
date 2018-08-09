@@ -15,10 +15,10 @@
     <module>es-client</module>
     <module>common-misc</module>
     <module>common</module>
-    <module>mqproducer</module>
-    <module>mqconsumer</module>
+    <module>kafkamqproducer</module>
+    <module>kafkamqconsumer</module>
     <module>timer-task</module>
-    <module>log-mqconsumer</module>
+    <module>log-kafkamqconsumer</module>
   </modules>
 
 </project>
