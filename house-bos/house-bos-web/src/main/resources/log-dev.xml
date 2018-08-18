@@ -89,14 +89,16 @@
       </DefaultRolloverStrategy>
     </RollingFile>
 
-    <Kafka name="KAFKA" topic="my-topic" syncSend="false">
-      <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
-      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"/>
-      <Property name="bootstrap.servers">localhost:9092</Property>
-      <Property name="retries">10</Property>
-      <Property name="linger.ms">5</Property>
-      <Property name="buffer.memory">33554432</Property>
-    </Kafka>
+    <RocketMQ name="RocketmqLog4j2Appender" producerGroup="LogProducerGroup"
+      nameServerAddress="127.0.0.1:9876"
+      topic="HouseLog" tag="house-bos-web">
+      <JsonLayout>
+        <KeyValuePair key="serverIP" value="${sys:serverIP}"/>
+        <KeyValuePair key="serverName" value="${sys:serverName}"/>
+        <KeyValuePair key="systemNo" value="144"/>
+        <KeyValuePair key="system" value="house-bos-web"/>
+      </JsonLayout>
+    </RocketMQ>
 
   </appenders>
 
@@ -104,9 +106,11 @@
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.apache.curator" level="INFO"/>
     <logger name="io.netty" level="INFO"/>
-    <logger name="com.ice.brother.house.bos.web" level="DEBUG" additivity ="false">
-      <AppenderRef ref ="KAFKA"/>
-    </logger>
+
+    <Logger name="com.ice.brother.house.bos.web" level="DEBUG">
+      <AppenderRef ref="RocketmqLog4j2Appender"/>
+      <appender-ref ref="Console"/>
+    </Logger>
 
     <root level="all">
       <appender-ref ref="Console"/>

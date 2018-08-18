@@ -1,16 +1,20 @@
 server:
-  port: 8093
+  port: 8045
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8000/eureka/
 spring:
   application:
-    name: house-advert-web
-feign:
-  hystrix:
-    enabled: true
+    name: house-component-mqconsumer
 
   profiles:
     active: dev
 
+log:
+  topic: WEB_OPERATE_LOG
+
+tworker:
+  quartz: 1000
+thread:
+  size: 2

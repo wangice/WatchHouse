@@ -19,6 +19,8 @@
     <module>kafkamqconsumer</module>
     <module>timer-task</module>
     <module>log-kafkamqconsumer</module>
+    <module>mqconsumer</module>
+    <module>mqproducer</module>
   </modules>
 
 </project>

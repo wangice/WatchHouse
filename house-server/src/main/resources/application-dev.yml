@@ -1,3 +1,0 @@
-
-logging:
-  path: classpath:log-dev.xml

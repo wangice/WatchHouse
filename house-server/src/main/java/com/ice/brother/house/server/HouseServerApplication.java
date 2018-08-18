@@ -17,8 +17,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @SpringBootApplication(exclude = {ConfigurationPropertiesRebinderAutoConfiguration.class, WebMvcMetricsAutoConfiguration.class, SimpleMetricsExportAutoConfiguration.class})
 public class HouseServerApplication {
 
-    public static final AtomicBoolean RUN = new AtomicBoolean(true);
-
     public static void main(String[] args) {
         SpringApplication.run(HouseServerApplication.class, args);
     }

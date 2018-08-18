@@ -1,5 +1,7 @@
 package com.ice.brother.house.bos.web;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
@@ -22,7 +24,11 @@ import org.springframework.context.annotation.PropertySource;
 @ImportResource(value = {"classpath:provider.xml"})
 public class BosWebApplication {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws UnknownHostException {
+    InetAddress address = InetAddress.getLocalHost();
+    System.setProperty("serverIP", address.getHostAddress());
+    System.setProperty("serverName", address.getHostName());
+
     SpringApplication.run(BosWebApplication.class, args);
   }
 

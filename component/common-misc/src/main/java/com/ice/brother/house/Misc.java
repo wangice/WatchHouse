@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -1214,5 +1215,67 @@ public class Misc {
       strb.append(ste[i].toString()).append(Misc.LINE);
     }
     return strb.toString();
+  }
+
+  /**
+   * 对象转字节数组
+   *
+   * @param obj 对象
+   * @return 字节数组
+   */
+  public static byte[] object2Bytes(Object obj) {
+    byte[] bytes = null;
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    ObjectOutputStream objectOutputStream = null;
+    try {
+      objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+      objectOutputStream.writeObject(obj);
+      objectOutputStream.flush();
+      bytes = byteArrayOutputStream.toByteArray();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      if (objectOutputStream != null) {
+        try {
+          objectOutputStream.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        } finally {
+          try {
+            byteArrayOutputStream.close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+    return bytes;
+  }
+
+  /**
+   * 字节数组转对象
+   *
+   * @param bytes 字节数组
+   * @return 对象
+   */
+  public static <T> Optional<T> bytes2Object(byte[] bytes) {
+    T object = null;
+    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+    ObjectInputStream objectInputStream = null;
+    try {
+      objectInputStream = new ObjectInputStream(byteArrayInputStream);
+      object = (T) objectInputStream.readObject();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (objectInputStream != null) {
+        try {
+          objectInputStream.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return Optional.ofNullable(object);
   }
 }

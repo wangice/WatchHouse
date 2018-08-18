@@ -5,7 +5,6 @@ import com.ice.brother.house.app.web.core.AppActorBlocking;
 import com.ice.brother.house.app.web.core.Rsp;
 import com.ice.brother.house.app.web.core.Rsp.RspErr;
 import com.ice.brother.house.common.proto.OperateLog.WebOperateLog;
-import com.ice.brother.house.mqproducer.KafkaProducerMessageHandler;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -39,9 +38,6 @@ public class ControllerInterceptor {
 
   @Value("${log.topic}")
   private String topic;
-
-  @Autowired
-  private KafkaProducerMessageHandler messageHandler;
 
   @Autowired
   private AppActorBlocking appActorBlocking;
@@ -95,8 +91,8 @@ public class ControllerInterceptor {
           method, Misc.obj2json(result));
       webOperateLog.setDuration(endTime - startTime);
       webOperateLog.setResponse(Misc.obj2json(result));
-      appActorBlocking
-          .future(c -> messageHandler.send(topic, webOperateLog.build(), new Date().getTime()));
+//      appActorBlocking
+//          .future(c -> messageHandler.send(topic, webOperateLog.build(), new Date().getTime()));
     } catch (Throwable throwable) {
       endTime = System.currentTimeMillis();
       logger.error("exception: {}", Misc.trace(throwable));
@@ -109,8 +105,8 @@ public class ControllerInterceptor {
       webOperateLog.setDuration(endTime - startTime);
       webOperateLog.setResponse(Misc.obj2json(data));
       /*耗时操作放入其他线程消费.*/
-      appActorBlocking
-          .future(c -> messageHandler.send(topic, webOperateLog.build(), new Date().getTime()));
+//      appActorBlocking
+//          .future(c -> messageHandler.send(topic, webOperateLog.build(), new Date().getTime()));
       return data;
     }
     return result;

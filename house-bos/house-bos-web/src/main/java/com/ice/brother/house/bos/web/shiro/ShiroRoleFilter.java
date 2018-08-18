@@ -27,7 +27,6 @@ public class ShiroRoleFilter extends AuthorizationFilter {
 
     if (rolesArray == null || rolesArray.length == 0) {
       // no roles specified, so nothing to check - allow access.
-      logger.info("没有角色，不做任何校验");
       return true;
     }
     //校验角色菜单权限

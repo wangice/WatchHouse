@@ -29,7 +29,7 @@ public class UserController extends BaseController {
 
   @GetMapping("/queryUserList")
   public Rsp queryUserList() throws Exception {
-    logger.debug("queryuserlist 请求");
+    logger.info("输出");
     RspQueryProjectVersion rsp = new RspQueryProjectVersion();
     rsp.projectVersion = localeMessageSourceService.getMessage(I18nConstant.MESSAGE, null);
     return transEnd(RspErr.ERR_NONE, rsp);

@@ -39,26 +39,19 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-logging</artifactId>
-    </dependency>
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
     </dependency>
 
+
     <dependency> <!-- 引入log4j2依赖 -->
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-log4j2</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.logging.log4j</groupId>
-          <artifactId>log4j-slf4j-impl</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -84,13 +77,13 @@
           <artifactId>HdrHistogram</artifactId>
         </exclusion>
         <exclusion>
-          <groupId> com.google.guava</groupId>
+          <groupId>com.google.guava</groupId>
           <artifactId>guava</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
-      <groupId> com.google.guava</groupId>
+      <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>${guava.version}</version>
     </dependency>
@@ -121,11 +114,6 @@
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.ice.brother</groupId>
-      <artifactId>mqproducer</artifactId>
-      <version>${project.version}</version>
-    </dependency>
     <dependency>
       <groupId>com.ice.brother</groupId>
       <artifactId>common</artifactId>
@@ -209,13 +197,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.kafka</groupId>
-      <artifactId>kafka-clients</artifactId>
-      <version>${kafka.version}</version>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-logappender</artifactId>
+      <version>${rocketmq.client.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

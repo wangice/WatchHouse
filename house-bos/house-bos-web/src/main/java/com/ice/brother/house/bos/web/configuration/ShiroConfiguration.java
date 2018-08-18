@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.Filter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
