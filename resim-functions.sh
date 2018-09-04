@@ -30,26 +30,27 @@ install(){
     #加入系统服务
     echo "Add to System Service named ${App_Service_Name}"
     #卸载原有服务
-    sudo update-rc.d -f ${App_Service_Name} remove
-    sudo rm -rf /etc/init.d/${App_Service_Name}
+    sudo chkconfig ${App_Service_Name} off
+    sudo chkconfig --del ${App_Service_Name}
+    sudo rm -rf /etc/rc.d/init.d/${App_Service_Name}
 
     #增加新服务
     echo "current dir:" `pwd`
     df | grep /opt
     if [  $? -eq 0 ]
     then
-        echo opt 单独分区,自启动脚本拷贝到/etc/init.d/${App_Service_Name}
-        sudo cp ${Dir}/${JAR_Shell} /etc/init.d/${App_Service_Name}
-        sudo ln -s /etc/init.d/${App_Service_Name}   ${App_Home}/${JAR_Shell}
+        echo opt 单独分区,自启动脚本拷贝到/etc/rc.d/init.d/${App_Service_Name}
+        sudo cp ${Dir}/${JAR_Shell} /etc/rc.d/init.d/${App_Service_Name}
+        sudo ln -s /etc/rc.d/init.d/${App_Service_Name}   ${App_Home}/${JAR_Shell}
     else
-        echo opt 非单独分区,自启动脚本链接到/etc/init.d/${App_Service_Name}
+        echo opt 非单独分区,自启动脚本链接到/etc/rc.d/init.d/{App_Service_Name}
         sudo  cp ${Dir}/${JAR_Shell} ${App_Home}/${JAR_Shell}
-        sudo ln -s ${App_Home}/${JAR_Shell} /etc/init.d/${App_Service_Name}
+        sudo ln -s ${App_Home}/${JAR_Shell} /etc/rc.d/init.d/${App_Service_Name}
     fi
 
     #设置开机启动
     echo "Set Boot Up Service when UbuntuServer System start up"
-    sudo update-rc.d ${App_Service_Name} defaults
+    sudo chkconfig ${App_Service_Name} on
 
 
 	#create group if not exists
@@ -81,8 +82,9 @@ install(){
 #卸载，删除所有文件
 uninstall(){
     echo "Uninstall Service ${App_Service_Name}"
-    sudo update-rc.d -f ${App_Service_Name} remove
-    sudo rm -rf /etc/init.d/${App_Service_Name}
+    sudo chkconfig ${App_Service_Name} off
+    sudo chkconfig --del ${App_Service_Name}
+    sudo rm -rf /etc/rc.d/init.d/${App_Service_Name}
     echo "Remove app files and log files ... "
     sudo rm -rf ${App_Home} ${Log_Home}
     echo "Uninstall ${App_Service_Name} Complete!"
