@@ -8,8 +8,9 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
   <artifactId>house-server</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
 
   <dependencies>
 
@@ -42,7 +43,6 @@
     </dependency>
 
 
-
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
@@ -53,17 +53,88 @@
           <artifactId>HdrHistogram</artifactId>
         </exclusion>
         <exclusion>
-          <groupId> com.google.guava</groupId>
+          <groupId>com.google.guava</groupId>
           <artifactId>guava</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
 
     <dependency>
-      <groupId> com.google.guava</groupId>
+      <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>${guava.version}</version>
     </dependency>
   </dependencies>
+
+
+  <build>
+    <finalName>${project.artifactId}-V${project.version}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <layout>JAR</layout>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <copy file="${project.basedir}/src/main/script/house-server.sh"
+                  tofile="${project.build.directory}/${project.artifactId}-V${project.version}.sh"/>
+                <replaceregexp
+                  file="${project.build.directory}/${project.artifactId}-V${project.version}.sh"
+                  match="App_Ext_Name\=Unknown" flags="s"
+                  replace="App_Ext_Name=V${project.version}"/>
+                <concat
+                  destfile="${project.build.directory}/${project.artifactId}-V${project.version}.sh"
+                  append="yes" encoding="UTF8">
+                  <fileset file="${project.basedir}/../resim-functions.sh"/>
+                </concat>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven.assembly.plugin.version}</version>
+        <configuration>
+          <appendAssemblyId>false</appendAssemblyId>
+          <descriptors>
+            <descriptor>src/main/script/assembly.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 
 </project>
