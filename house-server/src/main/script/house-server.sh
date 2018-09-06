@@ -18,14 +18,14 @@
 
 # 当前目录
 Dir=$(cd "$(dirname "$0")"; pwd)
-App_File_Name=resim-bos-oss-web
+App_File_Name=house-server
 App_Ext_Name=Unknown
 #安装文件
 JAR_File_Name=${App_File_Name}-${App_Ext_Name}.jar
 #启动/停止脚本
 JAR_Shell=${App_File_Name}-${App_Ext_Name}.sh
 #应用主目录
-App_Base_Home=/opt/resim-bos-oss-web
+App_Base_Home=/opt/house-server
 #应用程序安装目录
 App_Home=${App_Base_Home}/app
 #应用程序日志目录
